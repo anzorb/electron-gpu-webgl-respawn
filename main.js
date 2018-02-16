@@ -16,11 +16,7 @@ function createWindow () {
   mainWindow = new BrowserWindow({width: 800, height: 600})
 
   // and load the index.html of the app.
-  mainWindow.loadURL(url.format({
-    pathname: path.join(__dirname, 'index.html'),
-    protocol: 'file:',
-    slashes: true
-  }))
+  mainWindow.loadURL('https://threejs.org/examples/#webgl_geometry_colors')
 
   // Open the DevTools.
   // mainWindow.webContents.openDevTools()
@@ -46,6 +42,11 @@ app.on('window-all-closed', function () {
   if (process.platform !== 'darwin') {
     app.quit()
   }
+})
+
+app.on('gpu-process-crashed', function() {
+  console.log('GPU process crashed!');
+  mainWindow.webContents.reload();
 })
 
 app.on('activate', function () {
